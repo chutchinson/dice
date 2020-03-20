@@ -1,0 +1,101 @@
+:root {
+    --dice-size: 12vw;
+    --roll-duration: 500ms;
+    --roll-scale: 1.5;
+    --roll-blur: 3px;
+}
+
+html {
+    touch-action: manipulation;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: sans-serif;
+    font-size: 24px;
+    overflow-x: hidden;
+    background-color: #eee;
+}
+
+@keyframes roll {
+    from { 
+        transform: rotateZ(0deg) scale(var(--roll-scale));
+        filter: blur(var(--roll-blur));
+    }
+    to { 
+        transform: rotateZ(360deg) scale(1.0); 
+        filter: blur(0);
+    }
+}
+
+@keyframes fade {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dice {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--dice-size);
+    flex: 1 0 auto;
+}
+
+.dice > i {
+    animation: none;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+    margin-bottom: 0.25em;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dice.rolling > i {
+    animation: roll var(--roll-duration) ease-out;
+}
+
+.dice.rolling > span {
+    animation: fade var(--roll-duration) ease-in-out;
+}
+
+.dice:active {
+    color: #666;
+}
+
+@media screen and (max-width: 700px) {
+    :root {
+        --dice-size: 15vh;
+    }
+    .dice {
+        min-height: auto;
+        min-width: 50vw;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .dice > i {
+        margin-bottom: 0;
+        margin-right: 0.5em;
+    }
+    main {
+        flex-direction: column;
+    }
+}
